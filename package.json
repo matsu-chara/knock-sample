@@ -1,0 +1,8 @@
+{
+  "name": "knock-sample",
+  "version": "1.0.0",
+  "devDependencies": {
+    "coffeeify": "^1.0.0",
+    "debowerify": "^1.2.0"
+  }
+}
