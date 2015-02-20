@@ -120,7 +120,7 @@ hello的なテストは通ったけど、require 'Todo'すると
 module momentが見つからないと言われた。
 
 browserifyする必要がありそうだったので、gulpfileを書き換え。
-使っていたespower-coffeeはcoffeeify→debowerifyの流れを崩すのでクビにして（元から
+使っていたespower-coffeeはcoffeeify→debowerifyの流れを崩すのでやめにして（元から
 ベータだった不安もあり）、gulp-espowerに変更した。
 
 ## ToDo
