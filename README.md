@@ -24,8 +24,11 @@ css周りとかでどうせgulpに巻き込まれるから、下手に頑張ら�
     * [coffeeify](https://www.npmjs.com/package/coffeeify)
     * [debowerify](https://www.npmjs.com/package/debowerify)
     * [brfs](https://www.npmjs.com/package/brfs)
-* [gulp-uglify](https://www.npmjs.com/package/gulp-uglify)
-* [gulp-concat](https://www.npmjs.com/package/gulp-concat)
+    * [espowerify](https://www.npmjs.com/package/espowerify)
+* gulp-uglify
+* gulp-rename
+* gulp-plumber
+* gulp-watch
 * [vinyl-tranform](https://www.npmjs.com/package/vinyl-transform)
 
 
@@ -87,12 +90,31 @@ $parents[0]は$parentと同じだよって書いてあるから、
 
 なんでかはもうちょっとknockoutのcontextについて調べないといけなさそう。
 
+### textInput binding
+
+標準のvalueでdata-bindすると、エンターを押した時にしかアップデートがかからないので、残り文字数をリアルタイムに更新したい！ってのはできない。
+
+data-bind="value: hogehoge, valueUpdate: afterkeydown"とかやるとキー入力ごとにアップデートがかかるようになるらしくて、それを使おうとしてたけど、最近はdata-bind="textInput: hoge"でいい感じになるらしい。便利だ。
+
 ## テスト
 
-* karma
+karma + mocha + power-assertみたいなおしゃれ構成にしたかったけど、
+karmaの設定ではまったのと、そもそも現段階でkarmaの役割がわかんなかったので、
+gulp + mocha + power-assertの構成にした。
+power-assertをchaiにするのはそんなに大変じゃなさそう。
+
+power-assertを使うためには別途gulp-espowerが必要。
+gulp-mochaも必要。
+
+[0からはじめるpower-assert](http://lealog.hateblo.jp/entry/2014/12/01/121031)
+
+
+と思ったらespower-coffeeなるものがあるらしくcoffeeで書くならこっちがよさそう。
+[https://gist.github.com/twada/dd04b07f3a197456ed20]
+
 * mocha
-* chai
-* Shinon.js
+* power-assert
+* espower-coffee
 
 ## ToDo
 
