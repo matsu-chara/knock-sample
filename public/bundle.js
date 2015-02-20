@@ -13513,7 +13513,7 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 },{}],4:[function(require,module,exports){
 var ToDo, moment;
 
-moment = require("./../bower_components/moment/moment.js");
+moment = require("./../../bower_components/moment/moment.js");
 
 ToDo = (function() {
   function ToDo(text1, deadlineString) {
@@ -13543,67 +13543,79 @@ module.exports = ToDo;
 
 
 
-},{"./../bower_components/moment/moment.js":3}],5:[function(require,module,exports){
-var ToDo, ToDoViewModel, ko, moment,
+},{"./../../bower_components/moment/moment.js":3}],5:[function(require,module,exports){
+var ToDo, ToDoListViewModel, ko, moment,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-ko = require("./../bower_components/knockout/dist/knockout.js");
+ko = require("./../../bower_components/knockout/dist/knockout.js");
 
-moment = require("./../bower_components/moment/moment.js");
+moment = require("./../../bower_components/moment/moment.js");
 
 ToDo = require('./ToDo');
 
-ToDoViewModel = (function() {
+ToDoListViewModel = (function() {
   var DATE_FORMAT;
 
   DATE_FORMAT = "M/D H:mm";
 
-  function ToDoViewModel() {
+  function ToDoListViewModel() {
+    this.setIsTextFocused = bind(this.setIsTextFocused, this);
     this.remove = bind(this.remove, this);
     this.add = bind(this.add, this);
     this.todos = ko.observableArray();
     this.text = ko.observable("");
+    this.isTextFocused = ko.observable(true);
     this.deadline = ko.observable(moment().format(DATE_FORMAT));
   }
 
-  ToDoViewModel.prototype.add = function() {
+  ToDoListViewModel.prototype.add = function() {
     if (!ToDo.validate(this.text(), this.deadline())) {
       return;
     }
     this.todos.push(new ToDo(this.text(), this.deadline()));
     this.text("");
+    this.setIsTextFocused();
     return this.deadline(moment().format(DATE_FORMAT));
   };
 
-  ToDoViewModel.prototype.remove = function(todo, e) {
+  ToDoListViewModel.prototype.remove = function(todo, e) {
     return this.todos.remove(todo);
   };
 
-  ToDoViewModel.prototype.printToDo = function(todo) {
+  ToDoListViewModel.prototype.printToDo = function(todo) {
     return todo.text + " 〆 " + (todo.deadline.format(DATE_FORMAT));
   };
 
-  return ToDoViewModel;
+  ToDoListViewModel.prototype.setIsTextFocused = function() {
+    return this.isTextFocused(true);
+  };
+
+  return ToDoListViewModel;
 
 })();
 
-module.exports = ToDoViewModel;
+module.exports = ToDoListViewModel;
 
 
 
-},{"./../bower_components/knockout/dist/knockout.js":2,"./../bower_components/moment/moment.js":3,"./ToDo":4}],6:[function(require,module,exports){
-var $, ToDoViewModel, ko;
+},{"./../../bower_components/knockout/dist/knockout.js":2,"./../../bower_components/moment/moment.js":3,"./ToDo":4}],6:[function(require,module,exports){
+var $, fs, ko;
 
 ko = require("./../bower_components/knockout/dist/knockout.js");
 
 $ = require("./../bower_components/jquery/dist/jquery.js");
 
-ToDoViewModel = require('./ToDoViewModel');
+
+
+ko.components.register('todo-list', {
+  viewModel: require('./ToDoList/ToDoListViewModel'),
+  template: "<div>\n  <h1>ToDo</h1>\n  <p>\n    <input type=\"text\"  placeholder=\"ToDo\" data-bind=\"value: text, hasfocus: isTextFocused\">\n    <input type=\"text\"  placeholder=\"締め切り\" data-bind=\"value: deadline\">\n    <button data-bind=\"click:add\">タスクを積む</button>\n  </p>\n\n  <ul data-bind=\"foreach: todos, visible:todos().length > 0\">\n    <li>\n      <span data-bind=\"text: $component.printToDo($data)\"></span> -\n      <button data-bind=\"click:$component.remove\">消す</button>\n    </li>\n  </ul>\n</div>\n"
+});
 
 $(function() {
-  return ko.applyBindings(new ToDoViewModel(), $("#todoList")[0]);
+  return ko.applyBindings();
 });
 
 
 
-},{"./../bower_components/jquery/dist/jquery.js":1,"./../bower_components/knockout/dist/knockout.js":2,"./ToDoViewModel":5}]},{},[6]);
+},{"./../bower_components/jquery/dist/jquery.js":1,"./../bower_components/knockout/dist/knockout.js":2,"./ToDoList/ToDoListViewModel":5}]},{},[6]);

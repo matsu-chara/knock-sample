@@ -16,6 +16,7 @@ gulp.task 'build', ->
         extensions: ['.coffee']
       .transform 'coffeeify'
       .transform 'debowerify'
+      .transform 'brfs'
       .bundle()
     )
     # .pipe uglify(mangle: false)
@@ -23,6 +24,6 @@ gulp.task 'build', ->
     .pipe gulp.dest('public')
 
 gulp.task 'watch', ->
-  gulp.watch('src/**/*.coffee', ['build'])
+  gulp.watch(['src/**/*.coffee', 'src/**/*.html'], ['build'])
 
 gulp.task 'default', ['build']

@@ -23,6 +23,7 @@ css周りとかでどうせgulpに巻き込まれるから、下手に頑張ら�
 * [browserify](http://browserify.org/)
     * [coffeeify](https://www.npmjs.com/package/coffeeify)
     * [debowerify](https://www.npmjs.com/package/debowerify)
+    * [brfs](https://www.npmjs.com/package/brfs)
 * [gulp-uglify](https://www.npmjs.com/package/gulp-uglify)
 * [gulp-concat](https://www.npmjs.com/package/gulp-concat)
 * [vinyl-tranform](https://www.npmjs.com/package/vinyl-transform)
@@ -58,6 +59,30 @@ module.exports = クラス名、としてあれば、
 
 ある程度書いてからコピペで分割してもまったく問題なかったから
 ちゃんと分割できて書けてるぽい。
+
+### componentについて
+
+#### やり方
+    1. componentにしたい部分（一つのViewModelとか）をガッと切り取って、ペッと.htmlファイルにする。
+    2. html中でdata-bind:foreachを使っていて、その中に$rootがあったら$componentに置き換える。
+    3. src/index.coffeeみたいな感じにする。(fs.readFileSyncの部分はbrowserifyするときにbrfsによって対象ファイルの文字列に置き換えられる。)
+
+#### 感想
+
+ちょっとつまったけど、そこそこ気軽にできそう。
+
+component templateを使ってる時は$rootを$componentにしないといけないらしい。
+
+[functions in knockout components (knockoutjs 3.2+)](http://stackoverflow.com/questions/25524216/functions-in-knockout-components-knockoutjs-3-2)によると、
+$rootはko.applyBindingsに渡したのになるから$parentにしろとのことだけど、
+[Binding context](http://knockoutjs.com/documentation/binding-context.html)には、
+$rootは$parents[$parents.length - 1]と等しくて、
+$parents[0]は$parentと同じだよって書いてあるから、
+結局同じじゃないのかって気がする。
+
+うーんと思ってたけど、 [Binding context](http://knockoutjs.com/documentation/binding-context.html)のところにちょうど$componentってのがあって、component template使ってる時のViewModelはこれやでって書いてあったから、これで良いらしい。
+
+なんでかはもうちょっとknockoutのcontextについて調べないといけなさそう。
 
 ## テスト
 
