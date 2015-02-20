@@ -108,13 +108,20 @@ gulp-mochaも必要。
 
 [0からはじめるpower-assert](http://lealog.hateblo.jp/entry/2014/12/01/121031)
 
-
-と思ったらespower-coffeeなるものがあるらしくcoffeeで書くならこっちがよさそう。
-[https://gist.github.com/twada/dd04b07f3a197456ed20]
-
 * mocha
 * power-assert
-* espower-coffee
+* gulp-espower
+* gulp-mocha
+
+### テストでもbowerをrequireできるように
+
+上の構成で
+hello的なテストは通ったけど、require 'Todo'すると
+module momentが見つからないと言われた。
+
+browserifyする必要がありそうだったので、gulpfileを書き換え。
+使っていたespower-coffeeはcoffeeify→debowerifyの流れを崩すのでクビにして（元から
+ベータだった不安もあり）、gulp-espowerに変更した。
 
 ## ToDo
 
