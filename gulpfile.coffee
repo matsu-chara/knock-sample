@@ -8,19 +8,20 @@ plumber    = require 'gulp-plumber'
 mocha      = require 'gulp-mocha'
 espower    = require 'gulp-espower'
 
+browserifyIt = (filename) ->
+  browserify
+    entries: [filename]
+    extensions: ['.coffee']
+  .transform 'coffeeify'
+  .transform 'debowerify'
+  .transform 'brfs'
+  .bundle()
+
 gulp.task 'build', ->
   gulp
     .src(['src/index.coffee'])
     .pipe plumber()
-    .pipe(transform (filename) ->
-      browserify
-        entries: [filename]
-        extensions: ['.coffee']
-      .transform 'coffeeify'
-      .transform 'debowerify'
-      .transform 'brfs'
-      .bundle()
-    )
+    .pipe transform(browserifyIt)
     # .pipe uglify(mangle: false)
     .pipe rename('bundle.js')
     .pipe gulp.dest('public')
@@ -28,15 +29,8 @@ gulp.task 'build', ->
 gulp.task 'test', ->
   gulp
     .src(['test/**/*.coffee'])
-    .pipe(transform (filename) ->
-      browserify
-        entries: [filename]
-        extensions: ['.coffee']
-      .transform 'coffeeify'
-      .transform 'debowerify'
-      .transform 'brfs'
-      .bundle()
-    )
+    .pipe plumber()
+    .pipe transform(browserifyIt)
     .pipe espower()
     .pipe rename(extname: ".js")
     .pipe gulp.dest('test/espowered/')
@@ -44,5 +38,8 @@ gulp.task 'test', ->
 
 gulp.task 'watch', ->
   gulp.watch(['src/**/*.coffee', 'src/**/*.html'], ['build'])
+
+gulp.task 'watch.test', ->
+  gulp.watch(['test/**/*.coffee'], ['test'])
 
 gulp.task 'default', ['build']
