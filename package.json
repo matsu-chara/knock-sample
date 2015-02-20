@@ -17,5 +17,5 @@
     "phantomjs": "^1.9.15",
     "power-assert": "^0.10.2",
     "vinyl-transform": "^1.0.0"
-  },
+  }
 }

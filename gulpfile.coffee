@@ -36,10 +36,10 @@ gulp.task 'test', ->
     .pipe gulp.dest('test/espowered/')
     .pipe mocha()
 
-gulp.task 'watch', ->
+gulp.task 'build:watch', ->
   gulp.watch(['src/**/*.coffee', 'src/**/*.html'], ['build'])
 
-gulp.task 'watch.test', ->
+gulp.task 'test:watch', ->
   gulp.watch(['test/**/*.coffee'], ['test'])
 
 gulp.task 'default', ['build']
