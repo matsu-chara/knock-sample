@@ -4,5 +4,20 @@
     <script src="bundle.js"></script>
   </head>
   <body>
+    <div id="todoList">
+      <h1>Todo</h1>
+      <p>
+        <input type="text"  placeholder="Todo" data-bind="value: text">
+        <input type="text"  placeholder="締め切り" data-bind="value: deadline">
+        <button data-bind="click:add">タスクを積む</button>
+      </p>
+
+      <ul data-bind="foreach: todos, visible:todos().length > 0">
+        <li>
+          <span data-bind="text: $root.printTodo($data)"></span> -
+          <button data-bind="click:$root.remove">消す</button>
+        </li>
+      </ul>
+    </div>
   </body>
 </html>
