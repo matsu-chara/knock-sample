@@ -14,11 +14,11 @@ class ToDoListViewModel
     @deadline = ko.observable(moment().format(DATE_FORMAT))
 
   add: () =>
+    @setIsTextFocused()
     return unless ToDo.validate(@text(), @deadline())
 
     @todos.push(new ToDo(@text(), @deadline()))
     @text("")
-    @setIsTextFocused()
     @deadline(moment().format(DATE_FORMAT))
 
   remove: (todo, e) =>

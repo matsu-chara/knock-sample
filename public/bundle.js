@@ -13569,12 +13569,12 @@ ToDoListViewModel = (function() {
   }
 
   ToDoListViewModel.prototype.add = function() {
+    this.setIsTextFocused();
     if (!ToDo.validate(this.text(), this.deadline())) {
       return;
     }
     this.todos.push(new ToDo(this.text(), this.deadline()));
     this.text("");
-    this.setIsTextFocused();
     return this.deadline(moment().format(DATE_FORMAT));
   };
 
