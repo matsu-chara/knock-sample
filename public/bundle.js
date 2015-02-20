@@ -13511,26 +13511,21 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],4:[function(require,module,exports){
-var $, Todo, TodoViewModel, ko, moment,
-  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-ko = require("./../bower_components/knockout/dist/knockout.js");
-
-$ = require("./../bower_components/jquery/dist/jquery.js");
+var ToDo, moment;
 
 moment = require("./../bower_components/moment/moment.js");
 
-Todo = (function() {
-  function Todo(text1, deadlineString) {
+ToDo = (function() {
+  function ToDo(text1, deadlineString) {
     this.text = text1;
     this.deadline = moment(Date.parse(deadlineString));
     if (!this.constructor.validate(this.text, deadlineString)) {
-      console.warn("invalid Todo object was generated.");
+      console.warn("invalid ToDo object was generated.");
       return;
     }
   }
 
-  Todo.validate = function(text, deadlineString) {
+  ToDo.validate = function(text, deadlineString) {
     if (text.length === 0) {
       return false;
     }
@@ -13540,16 +13535,30 @@ Todo = (function() {
     return true;
   };
 
-  return Todo;
+  return ToDo;
 
 })();
 
-TodoViewModel = (function() {
+module.exports = ToDo;
+
+
+
+},{"./../bower_components/moment/moment.js":3}],5:[function(require,module,exports){
+var ToDo, ToDoViewModel, ko, moment,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+ko = require("./../bower_components/knockout/dist/knockout.js");
+
+moment = require("./../bower_components/moment/moment.js");
+
+ToDo = require('./ToDo');
+
+ToDoViewModel = (function() {
   var DATE_FORMAT;
 
   DATE_FORMAT = "M/D H:mm";
 
-  function TodoViewModel() {
+  function ToDoViewModel() {
     this.remove = bind(this.remove, this);
     this.add = bind(this.add, this);
     this.todos = ko.observableArray();
@@ -13557,32 +13566,44 @@ TodoViewModel = (function() {
     this.deadline = ko.observable(moment().format(DATE_FORMAT));
   }
 
-  TodoViewModel.prototype.add = function() {
-    console.dir(Date.parse(this.deadline()));
-    if (!Todo.validate(this.text(), this.deadline())) {
+  ToDoViewModel.prototype.add = function() {
+    if (!ToDo.validate(this.text(), this.deadline())) {
       return;
     }
-    this.todos.push(new Todo(this.text(), this.deadline()));
+    this.todos.push(new ToDo(this.text(), this.deadline()));
     this.text("");
     return this.deadline(moment().format(DATE_FORMAT));
   };
 
-  TodoViewModel.prototype.remove = function(todo, e) {
+  ToDoViewModel.prototype.remove = function(todo, e) {
     return this.todos.remove(todo);
   };
 
-  TodoViewModel.prototype.printTodo = function(todo) {
+  ToDoViewModel.prototype.printToDo = function(todo) {
     return todo.text + " 〆 " + (todo.deadline.format(DATE_FORMAT));
   };
 
-  return TodoViewModel;
+  return ToDoViewModel;
 
 })();
 
+module.exports = ToDoViewModel;
+
+
+
+},{"./../bower_components/knockout/dist/knockout.js":2,"./../bower_components/moment/moment.js":3,"./ToDo":4}],6:[function(require,module,exports){
+var $, ToDoViewModel, ko;
+
+ko = require("./../bower_components/knockout/dist/knockout.js");
+
+$ = require("./../bower_components/jquery/dist/jquery.js");
+
+ToDoViewModel = require('./ToDoViewModel');
+
 $(function() {
-  return ko.applyBindings(new TodoViewModel(), $("#todoList")[0]);
+  return ko.applyBindings(new ToDoViewModel(), $("#todoList")[0]);
 });
 
 
 
-},{"./../bower_components/jquery/dist/jquery.js":1,"./../bower_components/knockout/dist/knockout.js":2,"./../bower_components/moment/moment.js":3}]},{},[4]);
+},{"./../bower_components/jquery/dist/jquery.js":1,"./../bower_components/knockout/dist/knockout.js":2,"./ToDoViewModel":5}]},{},[6]);
