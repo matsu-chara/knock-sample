@@ -15,5 +15,5 @@ gulp.task 'build', ->
     .bundle()
   )
   .pipe concat('bundle.js')
-  .pipe uglify(mangle: false)
+  # .pipe uglify(mangle: false)
   .pipe gulp.dest 'public'
