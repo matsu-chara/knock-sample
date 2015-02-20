@@ -63,13 +63,16 @@ module.exports = クラス名、としてあれば、
 ### componentについて
 
 #### やり方
-    1. componentにしたい部分（一つのViewModelとか）をガッと切り取って、ペッと.htmlファイルにする。
-    2. html中でdata-bind:foreachを使っていて、その中に$rootがあったら$componentに置き換える。
-    3. src/index.coffeeみたいな感じにする。(fs.readFileSyncの部分はbrowserifyするときにbrfsによって対象ファイルの文字列に置き換えられる。)
+
+1. componentにしたい部分（一つのViewModelとか）をガッと切り取って、ペッと.htmlにする。
+1. html中でdata-bind:foreachを使っていて、その中に$rootがあったら$componentに置き換える。
+1. src/index.coffeeみたいな感じにする。(fs.readFileSyncの部分はbrowserifyするときにbrfsによって対象ファイルの文字列に置き換えられる。)
 
 #### 感想
 
 ちょっとつまったけど、そこそこ気軽にできそう。
+
+つまったのはコードを何処に置くかの構成で考えたのと、$rootが使えなかった二点。
 
 component templateを使ってる時は$rootを$componentにしないといけないらしい。
 
