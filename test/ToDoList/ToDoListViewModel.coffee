@@ -38,7 +38,19 @@ describe "ToDoListViewModel", ->
       it "return string", ->
         assert typeof t.printToDo(new ToDo("test_task", "1/1 1:11")) is "string"
 
-    describe "setIsTextFocused", ->
+    describe "IsTextFocused", ->
       it "set isTextFocused property", ->
         t.setIsTextFocused()
+        assert t.isTextFocused()
+
+      it "turns true when add todo", ->
+        t.text("test_task")
+        t.deadline("1/1 1:11")
+        t.add()
+        assert t.isTextFocused()
+
+      it "turns true when add todo failing", ->
+        t.text("")
+        t.deadline("invalid string")
+        t.add()
         assert t.isTextFocused()
