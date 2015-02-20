@@ -18,6 +18,8 @@ css周りとかでどうせgulpに巻き込まれるから、下手に頑張ら�
 
 ## gulp
 
+### 使ってるプラグイン
+
 * [browserify](http://browserify.org/)
     * [coffeeify](https://www.npmjs.com/package/coffeeify)
     * [debowerify](https://www.npmjs.com/package/debowerify)
@@ -28,7 +30,32 @@ css周りとかでどうせgulpに巻き込まれるから、下手に頑張ら�
 
 vinyl-ナンチャラにかんしては[gulp と browserify と vinyl の話](http://umai-bow.hateblo.jp/entry/2014/10/08/002235)を参照
 
+### 監視
+
 ## knockout.js
+
+### 日付validationについて。
+
+ユーザー入力文字列をパースして日付を生成するのはつらいので、Date.parse()をisNanで見てOKだったら通す感じにした。
+moment推奨の方法っぽい（結局変なふうにパースされたら終わりだけど・・）
+
+Entity(=ToDo)のconstructorでvalidationしてダメだったらnullを返そうとしたけど、JSでは無理らしい。
+代わりにstatic methodでvaliadtionメソッドを追加してviewModelで判定してもらうようにした。
+
+ついでにEntityのconstructorでもvalidationを読んでダメだったらconsole.warnを出すようにしたから、
+呼び忘れに関してはまあ気づく範囲内かな。
+
+ToDoのテストでvalidationもテストできるし。
+
+static methodを呼ぶときはクラス名を直書きしなくても@constructorで良いらしい。便利だ。
+
+### ファイル分割について
+
+module.exports = クラス名、としてあれば、
+クラス名 = require 'クラス名'、でOK。
+
+ある程度書いてからコピペで分割してもまったく問題なかったから
+ちゃんと分割できて書けてるぽい。
 
 ## テスト
 
@@ -36,3 +63,11 @@ vinyl-ナンチャラにかんしては[gulp と browserify と vinyl の話](ht
 * mocha
 * chai
 * Shinon.js
+
+## ToDo
+
+* gulpで監視＆自動ビルド
+* valueUpdateを使って残り文字数をリアルタイムに更新
+* 日付validationの結果もすぐ分かるように
+* jsonをgetしてモデルの初期値を設定
+* jsonをpostして記録
