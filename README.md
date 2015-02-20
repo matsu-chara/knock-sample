@@ -32,6 +32,8 @@ vinyl-ナンチャラにかんしては[gulp と browserify と vinyl の話](ht
 
 ### 監視
 
+[gulpでbrowserify使ってcoffee-scriptの監視とコンパイル](http://qiita.com/mizchi/items/10a8e2b3e6c2c3235e61)を参考。
+
 ## knockout.js
 
 ### 日付validationについて。
@@ -66,7 +68,6 @@ module.exports = クラス名、としてあれば、
 
 ## ToDo
 
-* gulpで監視＆自動ビルド
 * valueUpdateを使って残り文字数をリアルタイムに更新
 * 日付validationの結果もすぐ分かるように
 * jsonをgetしてモデルの初期値を設定
