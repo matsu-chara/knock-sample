@@ -11603,23 +11603,74 @@
     ],
     51: [
         function (require, module, exports) {
-            var ToDo, assert;
+            var ToDo, assert, moment;
             assert = require('power-assert');
+            moment = require('./../../bower_components/moment/moment.js');
             ToDo = require('../../src/ToDoList/ToDo');
-            describe('karma and mocha testing', function () {
-                return it('isn\'t null', function () {
-                    var t;
-                    t = new ToDo('test', '1/1 1:11');
-                    return assert.notEqual(assert._expr(assert._capt(t, 'arguments/0'), {
-                        content: 'assert.notEqual(t, null)',
+            describe('ToDo', function () {
+                var t;
+                t = new ToDo('test_task', '1/1 1:11');
+                it('should be able to instantiate', function () {
+                    return assert(assert._expr(assert._capt(assert._capt(t, 'arguments/0/left') !== null, 'arguments/0'), {
+                        content: 'assert(t !== null)',
                         filepath: '/Users/matsu_chara/Documents/sand/knock-sample/test/ToDoList/ToDo.coffee',
-                        line: 14770
-                    }), null);
+                        line: 14772
+                    }));
+                });
+                it('has text', function () {
+                    return assert(assert._expr(assert._capt(assert._capt(assert._capt(t, 'arguments/0/left/object').text, 'arguments/0/left') === 'test_task', 'arguments/0'), {
+                        content: 'assert(t.text === "test_task")',
+                        filepath: '/Users/matsu_chara/Documents/sand/knock-sample/test/ToDoList/ToDo.coffee',
+                        line: 14775
+                    }));
+                });
+                it('has deadline', function () {
+                    return assert(assert._expr(assert._capt(assert._capt(assert._capt(t, 'arguments/0/callee/object/object').deadline, 'arguments/0/callee/object').isSame(assert._capt(moment(assert._capt(assert._capt(Date, 'arguments/0/arguments/0/arguments/0/callee/object').parse('1/1 1:11'), 'arguments/0/arguments/0/arguments/0')), 'arguments/0/arguments/0')), 'arguments/0'), {
+                        content: 'assert(t.deadline.isSame(moment(Date.parse("1/1 1:11"))))',
+                        filepath: '/Users/matsu_chara/Documents/sand/knock-sample/test/ToDoList/ToDo.coffee',
+                        line: 14778
+                    }));
+                });
+                it('has not deadline string', function () {
+                    return assert(assert._expr(assert._capt(assert._capt(typeof assert._capt(assert._capt(t, 'arguments/0/left/argument/object').deadline, 'arguments/0/left/argument'), 'arguments/0/left') !== 'string', 'arguments/0'), {
+                        content: 'assert(typeof t.deadline !== "string")',
+                        filepath: '/Users/matsu_chara/Documents/sand/knock-sample/test/ToDoList/ToDo.coffee',
+                        line: 14781
+                    }));
+                });
+                it('validate parmeter', function () {
+                    return assert(assert._expr(assert._capt(assert._capt(assert._capt(ToDo, 'arguments/0/left/callee/object').validate('test_task', '1/1 1:11'), 'arguments/0/left') === true, 'arguments/0'), {
+                        content: 'assert(ToDo.validate("test_task", "1/1 1:11") === true)',
+                        filepath: '/Users/matsu_chara/Documents/sand/knock-sample/test/ToDoList/ToDo.coffee',
+                        line: 14784
+                    }));
+                });
+                it('invalid empty text', function () {
+                    return assert(assert._expr(assert._capt(assert._capt(assert._capt(ToDo, 'arguments/0/left/callee/object').validate('', '1/1 1:11'), 'arguments/0/left') === false, 'arguments/0'), {
+                        content: 'assert(ToDo.validate("", "1/1 1:11") === false)',
+                        filepath: '/Users/matsu_chara/Documents/sand/knock-sample/test/ToDoList/ToDo.coffee',
+                        line: 14787
+                    }));
+                });
+                it('invalid non-date string', function () {
+                    return assert(assert._expr(assert._capt(assert._capt(assert._capt(ToDo, 'arguments/0/left/callee/object').validate('test_task', 'invalid string'), 'arguments/0/left') === false, 'arguments/0'), {
+                        content: 'assert(ToDo.validate("test_task", "invalid string") === false)',
+                        filepath: '/Users/matsu_chara/Documents/sand/knock-sample/test/ToDoList/ToDo.coffee',
+                        line: 14790
+                    }));
+                });
+                return it('can generate (wrongful) instance by invalid parameter', function () {
+                    return assert(assert._expr(assert._capt(assert._capt(assert._capt(ToDo, 'arguments/0/left/callee/object').validate('', 'invalid string'), 'arguments/0/left') !== null, 'arguments/0'), {
+                        content: 'assert(ToDo.validate("", "invalid string") !== null)',
+                        filepath: '/Users/matsu_chara/Documents/sand/knock-sample/test/ToDoList/ToDo.coffee',
+                        line: 14793
+                    }));
                 });
             });
         },
         {
             '../../src/ToDoList/ToDo': 50,
+            './../../bower_components/moment/moment.js': 7,
             'power-assert': 8
         }
     ]
