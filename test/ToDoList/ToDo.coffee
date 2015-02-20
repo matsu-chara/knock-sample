@@ -28,4 +28,4 @@ describe "ToDo", ->
     assert ToDo.validate("test_task", "invalid string") is false
 
   it "can generate (wrongful) instance by invalid parameter", ->
-    assert ToDo.validate("", "invalid string") isnt null
+    assert new ToDo("", "invalid string") isnt null
