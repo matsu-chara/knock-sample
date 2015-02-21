@@ -96,6 +96,17 @@ $parents[0]は$parentと同じだよって書いてあるから、
 
 data-bind="value: hogehoge, valueUpdate: afterkeydown"とかやるとキー入力ごとにアップデートがかかるようになるらしくて、それを使おうとしてたけど、最近はdata-bind="textInput: hoge"でいい感じになるらしい。便利だ。
 
+### knockout.mapping
+
+mappingプラグインを使ってjsonとviewmodelを紐付けようとしたんだけどrequireが上手く行かなかった。
+たぶんscript src=〜〜〜とかで読み込むのを前提に作ってあるんだと思う。
+
+あんまり興味もなかったので今回はいいやってことにした。
+
+### knockoutでjsonをやりとり
+
+knockout自体は何も面倒を見てくれなかったけど、jqueryでぽちぽちするだけだからこれといって面倒なことはなかった。
+
 ## テスト
 
 karma + mocha + power-assertみたいなおしゃれ構成にしたかったけど、
