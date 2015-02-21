@@ -49,7 +49,7 @@ class ToDoListViewModel
     )
 
   save: () =>
-    $.ajax(
+    $().ajax(
       type: "POST"
       url: API_END_POST
       datatype: "json"

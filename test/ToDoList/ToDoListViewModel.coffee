@@ -1,4 +1,5 @@
 assert = require 'power-assert'
+sinon  = require 'sinon'
 
 ToDo              = require '../../src/ToDoList/ToDo'
 ToDoListViewModel = require '../../src/ToDoList/ToDoListViewModel'
@@ -10,9 +11,8 @@ describe "ToDoListViewModel", ->
     assert t.todos().length is 0
 
   describe "add task", ->
-    afterEach (done) ->
+    afterEach () ->
       t.todos([])
-      done()
 
     it "can add task", ->
       t.text("test_task")
@@ -54,3 +54,14 @@ describe "ToDoListViewModel", ->
         t.deadline("invalid string")
         t.add()
         assert t.isTextFocused()
+
+    describe "get and post json", ->
+      # data = todos:[text:"焼肉",deadline:"2001-02-21T07:00:00.000Z"]
+
+      it "save data in todos", (done) ->
+        # server = sinon.fakeServer.create()
+        # server.respondWith('GET', '/todos.json',[
+        #   200, "Content-Type": 'application/json', JSON.stringify(data: data)
+        # ])
+
+      it "save todos", ->
