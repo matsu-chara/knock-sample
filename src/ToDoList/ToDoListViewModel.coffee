@@ -1,17 +1,21 @@
-ko     = require 'knockout'
-moment = require 'moment'
+ko         = require 'knockout'
+moment     = require 'moment'
+$          = require 'jquery'
 
 ToDo = require './ToDo'
 
 class ToDoListViewModel
-  DATE_FORMAT = "M/D H:mm"
+  DATE_FORMAT  = "M/D H:mm"
+  API_END_GET  = "http://localhost:9090/todos.json"
+  API_END_POST = "http://localhost:9090/save.php"
 
   constructor: () ->
-    @todos = ko.observableArray()
-
     @text = ko.observable("")
     @isTextFocused = ko.observable(true)
     @deadline = ko.observable(moment().format(DATE_FORMAT))
+
+    @todos = ko.observableArray()
+    @load()
 
   add: () =>
     @setIsTextFocused()
@@ -29,5 +33,29 @@ class ToDoListViewModel
 
   setIsTextFocused: () =>
     @isTextFocused(true)
+
+  load: () =>
+    $.ajax(
+      type: "GET"
+      url: API_END_GET
+      datatype: "json"
+      success: (todos) =>
+        d = ko.utils.arrayMap(
+          JSON.parse(todos).todos, (t) -> new ToDo(t.text, t.deadline)
+        )
+        @todos(d)
+      error: () ->
+        console.warn "no data"
+    )
+
+  save: () =>
+    $.ajax(
+      type: "POST"
+      url: API_END_POST
+      datatype: "json"
+      data: JSON.stringify(todos :@todos())
+      success: (data) ->
+      error: () -> console.warn "update failed"
+    )
 
 module.exports = ToDoListViewModel

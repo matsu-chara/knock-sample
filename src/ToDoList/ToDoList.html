@@ -4,6 +4,7 @@
     <input type="text"  placeholder="ToDo" data-bind="value: text, hasfocus: isTextFocused">
     <input type="text"  placeholder="締め切り" data-bind="value: deadline">
     <button data-bind="click:add">タスクを積む</button>
+    <button data-bind="click:save">タスクを保存</button>
   </p>
 
   <ul data-bind="foreach: todos, visible:todos().length > 0">
