@@ -39,13 +39,13 @@ class ToDoListViewModel
       type: "GET"
       url: API_END_GET
       datatype: "json"
-      success: (todos) =>
-        d = ko.utils.arrayMap(
-          JSON.parse(todos).todos, (t) -> new ToDo(t.text, t.deadline)
-        )
-        @todos(d)
-      error: () ->
-        console.warn "no data"
+    ).done((todos) =>
+      d = ko.utils.arrayMap(
+        JSON.parse(todos).todos, (t) -> new ToDo(t.text, t.deadline)
+      )
+      @todos(d)
+    ).fail( ->
+      console.warn "no data"
     )
 
   save: () =>
