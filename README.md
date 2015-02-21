@@ -1,5 +1,7 @@
 # knock-sample
 
+[![Build Status](https://travis-ci.org/matsu-chara/knock-sample.svg)](https://travis-ci.org/matsu-chara/knock-sample)
+
 knockout.jsの練習用
 
 練習用なのでいろいろつめこむ
@@ -123,6 +125,7 @@ gulp-mochaも必要。
 * power-assert
 * gulp-espower
 * gulp-mocha
+* sinon
 
 ### テストでもbowerをrequireできるように
 
@@ -134,9 +137,9 @@ browserifyする必要がありそうだったので、gulpfileを書き換え�
 使っていたespower-coffeeはcoffeeify→debowerifyの流れを崩すのでやめにして（元から
 ベータだった不安もあり）、gulp-espowerに変更した。
 
+### ajaxのテスト
+
 ## ToDo
 
 * valueUpdateを使って残り文字数をリアルタイムに更新
 * 日付validationの結果もすぐ分かるように
-* jsonをgetしてモデルの初期値を設定
-* jsonをpostして記録
