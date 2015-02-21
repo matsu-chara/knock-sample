@@ -58,7 +58,7 @@ describe "ToDoListViewModel", ->
     describe "get and post json", ->
       # data = todos:[text:"焼肉",deadline:"2001-02-21T07:00:00.000Z"]
 
-      it "save data in todos", (done) ->
+      it "get todos", ->
         # server = sinon.fakeServer.create()
         # server.respondWith('GET', '/todos.json',[
         #   200, "Content-Type": 'application/json', JSON.stringify(data: data)
