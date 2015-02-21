@@ -139,6 +139,30 @@ browserifyする必要がありそうだったので、gulpfileを書き換え�
 
 ### ajaxのテスト
 
+viewmodelの初期化に通信が必要になっているせいで、
+テスト全体がうまく行かなくなってしまった。
+jquery.ajaxはundefinedだしrequest, brwoser-requestもダメだった。
+
+viewmodelとmodelを一緒に書いてたからなのか・・・、
+そもそもの設計のせいもありそう。
+（newするだけで外部と通信するオブジェクトは行儀が悪いだろうし）
+
+結局ロードはボタン押してやってもらう感じにグレードダウンした。
+
+影響範囲を抑えられればstubにして抑えられそうだけど、
+browserifyしてrequireしてるせいで$がグローバルじゃないからテストからstubに
+差し替えられないんだよなー。そもそもアクセス権がないし・・・。
+
+$.ajaxとかをDIするんだと思うんだけど、
+viewmodelとmodelが分離してないから渡せないし、
+componentにしてるからindex.coffeeからも渡せないんだよなー。
+
+componentじゃなければnew viewmodel(jquery)とか、new viewmodel(dummy)とか
+して、いい感じに出来そうなんだけども・・・。
+
+あとブラウザ上でテストすれば$.ajaxも聞くから普通にテストできそうってのも
+あって色々めんどくさい。
+
 ## ToDo
 
 * valueUpdateを使って残り文字数をリアルタイムに更新

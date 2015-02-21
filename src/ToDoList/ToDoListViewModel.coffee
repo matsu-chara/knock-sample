@@ -1,6 +1,6 @@
-ko              = require 'knockout'
-moment          = require 'moment'
-request_promise = require 'request-promise'
+ko      = require 'knockout'
+moment  = require 'moment'
+$       = require 'jquery'
 
 ToDo = require './ToDo'
 
@@ -15,7 +15,6 @@ class ToDoListViewModel
     @deadline = ko.observable(moment().format(DATE_FORMAT))
 
     @todos = ko.observableArray()
-    @load()
 
   add: () =>
     @setIsTextFocused()
@@ -35,22 +34,14 @@ class ToDoListViewModel
     @isTextFocused(true)
 
   load: () =>
-    request_promise.get(
-      url: API_END_GET
-      json: true
-    )
-    .then (data) =>
+    $.getJSON(API_END_GET, (data) =>
       d = ko.utils.arrayMap(
         data.todos, (t) -> new ToDo(t.text, t.deadline)
       )
       @todos(d)
+    )
 
   save: () =>
-    request_promise.post(
-      url: API_END_POST
-      json: true
-      form: JSON.stringify(todos :@todos())
-    )
-    .catch () -> console.log "failed saving todos"
+    $.post(API_END_POST, JSON.stringify(todos: @todos()))
 
 module.exports = ToDoListViewModel
