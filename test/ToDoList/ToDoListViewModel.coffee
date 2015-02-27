@@ -1,5 +1,4 @@
 assert = require 'power-assert'
-sinon  = require 'sinon'
 
 ToDo              = require '../../src/ToDoList/ToDo'
 ToDoListViewModel = require '../../src/ToDoList/ToDoListViewModel'

@@ -29,3 +29,11 @@ describe "ToDo", ->
 
   it "can generate (wrongful) instance by invalid parameter", ->
     assert new ToDo("", "invalid string") isnt null
+
+describe "ToDo network", ->
+  it "can load all todos", ->
+      # no test
+
+  it "can save all todos", ->
+      # no test
+
