@@ -18,25 +18,34 @@ class ToDo
     return false if isNaN(Date.parse(deadlineString))
     return true
 
-  @loadAll: () ->
-    d = new $.Deferred
-    $.getJSON(API_END_GET, (data) ->
-      todos = ko.utils.arrayMap(data.todos,
-                (t) -> new ToDo(t.text, t.deadline)
-              )
-      d.resolve(todos)
-    )
-    return d.promise()
-
-  @saveAll: (ts) ->
-    d = new $.Deferred
-    $.post(API_END_POST, JSON.stringify(todos: ts),
-      (data, status) ->
+  @loadAll: (callback) ->
+    $.ajax(
+      type: 'GET'
+      url: API_END_GET
+      success: (data, status, jqXHR) ->
+        # dataType: 'json'を使うとnullがきた時にerrorになる。
+        # サーバーで204 no contentを返すとsuccessになるらしい。
+        data = JSON.parse(data)
         if status is "success"
-          d.resolve()
+          todos = ko.utils.arrayMap(data.todos,
+                    (t) -> new ToDo(t.text, t.deadline)
+                  )
+          callback(todos)
         else
-          d.reject(status)
+          callback(status)
+      error: (jqXHR, status, err) ->
+        callback(status)
     )
-    return d.promise()
+
+  @saveAll: (todos, callback) ->
+    $.ajax(
+      type: 'POST'
+      url: API_END_POST
+      data: JSON.stringify(todos: todos)
+      success: (data, status, jqXHR) ->
+        callback(status)
+      error: (jqXHR, status, err) ->
+        callback(status)
+    )
 
 module.exports = ToDo

@@ -31,10 +31,18 @@ class ToDoListViewModel
     @isTextFocused(true)
 
   load: () =>
-    ToDo.loadAll().done (todos) => @todos(todos)
+    ToDo.loadAll((data) =>
+      if typeof data is "string"
+        console.log "load error #{data}"
+        return
+
+      @todos(data)
+    )
 
   save: () ->
-    ToDo.saveAll(@todos()).done()
-                          .fail (e) -> console.log "saving failed"
+    ToDo.saveAll(@todos(), (status) ->
+      if status isnt "success"
+        console.log "saving failed: #{status}"
+    )
 
 module.exports = ToDoListViewModel
