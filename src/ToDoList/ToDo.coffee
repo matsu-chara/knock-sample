@@ -30,11 +30,11 @@ class ToDo
           todos = ko.utils.arrayMap(data.todos,
                     (t) -> new ToDo(t.text, t.deadline)
                   )
-          callback(todos)
+          callback?(todos)
         else
-          callback(status)
+          callback?(status)
       error: (jqXHR, status, err) ->
-        callback(status)
+        callback?(status)
     )
 
   @saveAll: (todos, callback) ->
@@ -43,9 +43,9 @@ class ToDo
       url: API_END_POST
       data: JSON.stringify(todos: todos)
       success: (data, status, jqXHR) ->
-        callback(status)
+        callback?(status)
       error: (jqXHR, status, err) ->
-        callback(status)
+        callback?(status)
     )
 
 module.exports = ToDo
