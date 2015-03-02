@@ -4,7 +4,7 @@ sinon   = require 'sinon'
 request = require 'superagent'
 
 ToDo   = require '../../src/ToDoList/ToDo'
-deferred = require '../helper/deferred'
+promiseDeferred = require 'promise-helper-for-deferred-style-resolve'
 
 describe "ToDo", ->
   todo_example = new ToDo("test_task", "1/1 1:11")
@@ -42,7 +42,7 @@ describe "ToDo", ->
       sinon.stub(request, 'get', (url, cb) ->
         ok = {ok: true, status: 200, text: JSON.stringify(todo_example_json)}
         ng = {ok: false, status: 404, text: ""}
-        return deferred(() -> cb ok, () -> cb ng)
+        return promiseDeferred(() -> cb ok, () -> cb ng)
       )
 
     afterEach ->
@@ -75,7 +75,7 @@ describe "ToDo", ->
       sinon.stub(request, 'post', (url, data_string, cb) ->
         ok = {ok: true, status: 200}
         ng = {ok: false, status: 404}
-        return deferred(() -> cb ok, () -> cb ng)
+        return promiseDeferred(() -> cb ok, () -> cb ng)
       )
 
     afterEach ->

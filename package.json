@@ -21,6 +21,7 @@
     "mocha": "^2.1.0",
     "phantomjs": "^1.9.15",
     "power-assert": "^0.10.2",
+    "promise-helper-for-deferred-style-resolve": "0.0.1",
     "sinon": "^1.12.2",
     "vinyl-source-stream": "^1.0.0"
   },
