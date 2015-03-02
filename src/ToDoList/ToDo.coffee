@@ -19,30 +19,26 @@ class ToDo
     return true
 
   @loadAll: (callback) ->
-    request
-      .get(API_END_GET)
-      .end((res) ->
-        # application/jsonがheaderについてるなら
-        # res.bodyでパース済みのものが取得できる
-        data = JSON.parse(res.text)
-        if res.ok
-          todos = ko.utils.arrayMap(data.todos,
-                    (t) -> new ToDo(t.text, t.deadline)
-                  )
-          callback?(res.status, todos)
-        else
-          callback?(res.status)
-      )
+    request.get(API_END_GET, (res) ->
+      # application/jsonがheaderについてるなら
+      # res.bodyでパース済みのものが取得できる
+      # 今回はファイルに直接アクセスしちゃうので手動パース
+      data = JSON.parse(res.text)
+      if res.ok
+        todos = ko.utils.arrayMap(data.todos,
+                  (t) -> new ToDo(t.text, t.deadline)
+                )
+        callback?(res.status, todos)
+      else
+        callback?(res.status)
+    )
 
   @saveAll: (todos, callback) ->
-    request
-      .post(API_END_POST)
-      .send(JSON.stringify(todos: todos))
-      .end((res) ->
-        if res.ok
-          callback?(res.status)
-        else
-          callback?(res.status)
-      )
+    request.post(API_END_POST, JSON.stringify(todos: todos), (res) ->
+      if res.ok
+        callback?(res.status)
+      else
+        callback?(res.status)
+    )
 
 module.exports = ToDo
