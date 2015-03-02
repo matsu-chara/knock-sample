@@ -23,5 +23,8 @@
     "power-assert": "^0.10.2",
     "sinon": "^1.12.2",
     "vinyl-source-stream": "^1.0.0"
+  },
+  "dependencies": {
+    "superagent": "^0.21.0"
   }
 }

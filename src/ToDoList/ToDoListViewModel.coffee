@@ -31,8 +31,8 @@ class ToDoListViewModel
     @isTextFocused(true)
 
   load: () =>
-    ToDo.loadAll((data) =>
-      if typeof data is "string"
+    ToDo.loadAll((status, data) =>
+      if status isnt 200
         console.log "load error #{data}"
         return
 
@@ -41,7 +41,7 @@ class ToDoListViewModel
 
   save: () ->
     ToDo.saveAll(@todos(), (status) ->
-      if status isnt "success"
+      if status isnt 200
         console.log "saving failed: #{status}"
     )
 

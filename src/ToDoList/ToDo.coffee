@@ -1,6 +1,6 @@
-$      = require 'jquery'
-ko     = require 'knockout'
-moment = require 'moment'
+ko      = require 'knockout'
+moment  = require 'moment'
+request = require 'superagent'
 
 class ToDo
   API_END_GET  = "http://localhost:9090/todos.json"
@@ -19,33 +19,30 @@ class ToDo
     return true
 
   @loadAll: (callback) ->
-    $.ajax(
-      type: 'GET'
-      url: API_END_GET
-      success: (data, status, jqXHR) ->
-        # dataType: 'json'を使うとnullがきた時にerrorになる。
-        # サーバーで204 no contentを返すとsuccessになるらしい。
-        data = JSON.parse(data)
-        if status is "success"
+    request
+      .get(API_END_GET)
+      .end((res) ->
+        # application/jsonがheaderについてるなら
+        # res.bodyでパース済みのものが取得できる
+        data = JSON.parse(res.text)
+        if res.ok
           todos = ko.utils.arrayMap(data.todos,
                     (t) -> new ToDo(t.text, t.deadline)
                   )
-          callback?(todos)
+          callback?(res.status, todos)
         else
-          callback?(status)
-      error: (jqXHR, status, err) ->
-        callback?(status)
-    )
+          callback?(res.status)
+      )
 
   @saveAll: (todos, callback) ->
-    $.ajax(
-      type: 'POST'
-      url: API_END_POST
-      data: JSON.stringify(todos: todos)
-      success: (data, status, jqXHR) ->
-        callback?(status)
-      error: (jqXHR, status, err) ->
-        callback?(status)
-    )
+    request
+      .post(API_END_POST)
+      .send(JSON.stringify(todos: todos))
+      .end((res) ->
+        if res.ok
+          callback?(res.status)
+        else
+          callback?(res.status)
+      )
 
 module.exports = ToDo

@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "dependencies": {
     "knockout": "3.3.0",
-    "jquery": "1.11.2",
     "moment": "~2.9.0"
   }
 }
