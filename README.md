@@ -191,6 +191,15 @@ IE9までしかテストされてないからIE6以降対応のknockoutのメリ
 ブラウザ上でのテストも厳しくなったけど、この辺はおしゃれに書こうとしなければ
 どうとでもなるので問題なさそう。
 
+#### 追記2
+
+自動読み込みは
+
+* [Lazy Loading an Observable in KnockoutJS](http://www.knockmeout.net/2011/06/lazy-loading-observable-in-knockoutjs.html)
+* [Lazy Loading an Observable Array with Knockout JS](http://chadly.net/2012/09/lazy-loading-an-observable-array-with-knockout-js/)
+
+を参考にしたらできそうだけどテストでまたスタブが必要そうだし面倒だからいいや。
+
 #### 外部からresolve
 
 deferredみたいに外部からresolve, rejectする方針でテストしたかったので色々ごちゃごちゃした。
