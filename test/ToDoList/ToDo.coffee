@@ -58,7 +58,7 @@ describe "ToDo", ->
       promise.then(()->
         assert(callback.withArgs(200, [t]).calledOnce)
         done()
-      )
+      ).catch((e) -> done(e))
       resolve()
 
     it "yield error", () ->
@@ -67,7 +67,7 @@ describe "ToDo", ->
       promise.then(()->
         assert(callback.withArgs(400).calledOnce)
         done()
-      )
+      ).catch((e) -> done(e))
       reject()
 
   describe "save all", ->
@@ -91,7 +91,7 @@ describe "ToDo", ->
       promise.then(()->
         assert(callback.withArgs(200).calledOnce)
         done()
-      )
+      ).catch((e) -> done(e))
       resolve()
 
     it "yield error", () ->
@@ -100,5 +100,5 @@ describe "ToDo", ->
       promise.then(()->
         assert(callback.withArgs(404).calledOnce)
         done()
-      )
+      ).catch((e) -> done(e))
       reject()
