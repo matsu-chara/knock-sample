@@ -5,6 +5,9 @@ test/espowered
 ### npm ###
 node_modules
 
+### istanbul ###
+coverage
+
 # Created by https://www.gitignore.io
 
 ### Bower ###

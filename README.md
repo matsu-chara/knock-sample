@@ -1,6 +1,8 @@
 # knock-sample
 
 [![Build Status](https://travis-ci.org/matsu-chara/knock-sample.svg)](https://travis-ci.org/matsu-chara/knock-sample)
+[![Code Climate](https://codeclimate.com/github/matsu-chara/knock-sample/badges/gpa.svg)](https://codeclimate.com/github/matsu-chara/knock-sample)
+[![Test Coverage](https://codeclimate.com/github/matsu-chara/knock-sample/badges/coverage.svg)](https://codeclimate.com/github/matsu-chara/knock-sample)
 
 knockout.jsの練習用
 

@@ -4,3 +4,4 @@ node_js:
 before_script:
   - npm install -g bower
   - bower install
+script: 'node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && CODECLIMATE_REPO_TOKEN=cfc074969456b9a3bd8cd77562b6c6339f9cc3d5823386c3715ab0accc4e907e node_modules/.bin/codeclimate < ./coverage/lcov.info && rm -rf ./coverage'
